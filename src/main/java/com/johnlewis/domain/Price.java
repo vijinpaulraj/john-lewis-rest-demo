@@ -5,7 +5,7 @@ public class Price {
 	private String was;
 	private String then1;
 	private String then2;
-	private String now;
+	private Object now;
 	private CurrencySymbol currency;
 
 	public String getWas() {
@@ -32,11 +32,11 @@ public class Price {
 		this.then2 = then2;
 	}
 
-	public String getNow() {
+	public Object getNow() {
 		return now;
 	}
 
-	public void setNow(String now) {
+	public void setNow(Object now) {
 		this.now = now;
 	}
 

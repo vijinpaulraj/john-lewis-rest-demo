@@ -132,7 +132,7 @@ public class ProductToProductModelConverter {
 
 	private int getDiscountPercentage (Price price) {
 		String initialPrice = "";
-		String finalPrice = "";
+		Float finalPrice;
 		if (!Strings.isNullOrEmpty(price.getThen2())) {
 			initialPrice = price.getThen2();
 		} else if (!Strings.isNullOrEmpty(price.getThen1())) {
@@ -140,13 +140,15 @@ public class ProductToProductModelConverter {
 		} else if (!Strings.isNullOrEmpty(price.getWas())) {
 			initialPrice = price.getWas();
 		}
-
-		if (!Strings.isNullOrEmpty(price.getNow())) {
-			finalPrice = price.getNow();
+		try {
+			finalPrice = Float.parseFloat(price.getNow().toString());
+		} catch (Exception e) {
+			//Todo: this is just to handle type {from:x, to:null}. Should be replaced with model.
+			finalPrice = null;
 		}
 
-		if (!Strings.isNullOrEmpty(initialPrice) && !Strings.isNullOrEmpty((finalPrice))) {
-			return Math.round((Float.parseFloat(finalPrice) / Float.parseFloat(initialPrice)) * 100);
+		if (!Strings.isNullOrEmpty(initialPrice) && finalPrice != null) {
+			return Math.round((finalPrice / Float.parseFloat(initialPrice)) * 100);
 		}
 		return 0;
 	}
