@@ -21,9 +21,11 @@ https://github.com/vijinpaulraj/john-lewis-rest-demo/wiki
 - Execute the `main` method from `com.johnlewis.JohnLewisRestDemo` on an IDE such as IntelliJ
 
 ### Method 2:
-- Run the below maven command from the project directory.
+- Execute the below maven command from the project directory.
 
 ```shell
 mvn spring-boot:run
 ```
+
+Now access the application on Swagger. http://localhost:8080/swagger-ui.html#
 
