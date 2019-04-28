@@ -59,7 +59,7 @@ public class ProductToProductModelConverterTest {
     	assertEquals(TITLE, pm.getTitle());
     	
     	//which is the price.now represented as a string, including the currency, e.g. “£1.75”. For values that are integer, if they are less £10 return a decimal price, otherwise show an integer price, e.g. “£2.00” or “£10”.
-    	assertEquals("£5.00", pm.getPriceNow());
+    	assertEquals("£5.00", pm.getNowPrice());
     	
     	//ShowPercDscount - in which case return “x% off - now £y.yy”.
     	assertEquals("50% off - now £5.00", pm.getPriceLabel());
@@ -94,7 +94,7 @@ public class ProductToProductModelConverterTest {
     	assertEquals(TITLE, pm.getTitle());
     	
     	//which is the price.now represented as a string, including the currency, e.g. “£1.75”. For values that are integer, if they are less £10 return a decimal price, otherwise show an integer price, e.g. “£2.00” or “£10”.
-    	assertEquals("£10", pm.getPriceNow());
+    	assertEquals("£10", pm.getNowPrice());
     	
     	// ShowWasNow - in which case return a string saying “Was £x.xx, now £y.yyy”.
     	assertEquals("Was £20, now £10", pm.getPriceLabel());
@@ -129,7 +129,7 @@ public class ProductToProductModelConverterTest {
        	assertEquals(TITLE, pm.getTitle());
        	
        	//which is the price.now represented as a string, including the currency, e.g. “£1.75”. For values that are integer, if they are less £10 return a decimal price, otherwise show an integer price, e.g. “£2.00” or “£10”.
-       	assertEquals("£10", pm.getPriceNow());
+       	assertEquals("£10", pm.getNowPrice());
        	
        	// ShowWasNow - in which case return a string saying “Was £x.xx, now £y.yyy”.
        	assertEquals("Was £20, now £10", pm.getPriceLabel());
@@ -165,7 +165,7 @@ public class ProductToProductModelConverterTest {
     	assertEquals(PRODUCT_ID, pm.getProductId());
     	assertEquals(TITLE, pm.getTitle());
 
-    	assertEquals("£5.00", pm.getPriceNow());
+    	assertEquals("£5.00", pm.getNowPrice());
     	
     	// ShowWasThenNow - in which case return a string saying “Was £x.xx, then £y.yy, now
     	// £z.zzz”. If the original price.then2 is not empty use that for the “then” price otherwise use
@@ -202,7 +202,7 @@ public class ProductToProductModelConverterTest {
     	assertEquals(TITLE, pm.getTitle());
     	
     	//which is the price.now represented as a string, including the currency, e.g. “£1.75”. For values that are integer, if they are less £10 return a decimal price, otherwise show an integer price, e.g. “£2.00” or “£10”.
-    	assertEquals("£3.00", pm.getPriceNow());
+    	assertEquals("£3.00", pm.getNowPrice());
     	
     	// ShowWasThenNow - in which case return a string saying “Was £x.xx, then £y.yy, now
     	// £z.zzz”. If the original price.then2 is not empty use that for the “then” price otherwise use
@@ -243,7 +243,7 @@ public class ProductToProductModelConverterTest {
     	assertEquals(TITLE, pm.getTitle());
     	
     	//which is the price.now represented as a string, including the currency, e.g. “£1.75”. For values that are integer, if they are less £10 return a decimal price, otherwise show an integer price, e.g. “£2.00” or “£10”.
-    	assertEquals("£10", pm.getPriceNow());
+    	assertEquals("£10", pm.getNowPrice());
     	
     	// ShowWasThenNow - in which case return a string saying “Was £x.xx, then £y.yy, now
     	// £z.zzz”. If the original price.then2 is not empty use that for the “then” price otherwise use
@@ -286,7 +286,7 @@ public class ProductToProductModelConverterTest {
 		assertEquals(TITLE, pm.getTitle());
 
 		//which is the price.now represented as a string, including the currency, e.g. “£1.75”. For values that are integer, if they are less £10 return a decimal price, otherwise show an integer price, e.g. “£2.00” or “£10”.
-		assertEquals("£3.00", pm.getPriceNow());
+		assertEquals("£3.00", pm.getNowPrice());
 
 		// ShowWasThenNow - in which case return a string saying “Was £x.xx, then £y.yy, now
 		// £z.zzz”. If the original price.then2 is not empty use that for the “then” price otherwise use

@@ -36,7 +36,7 @@ public class ProductToProductModelConverter {
 		target.setProductId(source.getProductId());
 		target.setTitle(source.getTitle());
 		target.setPriceLabel(priceLabel);
-		target.setPriceNow(nowPrice(source.getPrice()));
+		target.setNowPrice(nowPrice(source.getPrice()));
 		target.setColorSwatches(colorSwatch);
 		
 		return target;
