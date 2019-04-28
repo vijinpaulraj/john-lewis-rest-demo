@@ -1,11 +1,8 @@
 package com.johnlewis.services;
 
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
+import com.johnlewis.domain.Product;
+import com.johnlewis.model.ProductModel;
+import com.johnlewis.repository.PriceReductionRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,9 +13,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.johnlewis.domain.Product;
-import com.johnlewis.model.ProductModel;
-import com.johnlewis.repository.PriceReductionRepository;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.Assert.assertTrue;
 
 
 
@@ -28,30 +27,30 @@ public class PriceReductionServiceImplTest {
 	private static final Integer CATEGORY_ID = 123;
 	
     @TestConfiguration
-    static class DiscauntServicesImplTestContextConfiguration {
+    static class PriceReductionServicesImplTestContextConfiguration {
 
         @Bean
-        public PriceReductionService discauntService() {
+        public PriceReductionService priceReductionService() {
             return new PriceReductionServiceImpl();
         }
     }
 
     @Autowired
-    private PriceReductionService discauntService;
+    private PriceReductionService priceReductionService;
 
     @MockBean
-    private PriceReductionRepository discountRepository;
+    private PriceReductionRepository priceReductionRepository;
 
     @Before
     public void setUp() throws Exception {
 
-        Mockito.when(discountRepository.getProducts(CATEGORY_ID))
+        Mockito.when(priceReductionRepository.getProducts(CATEGORY_ID))
                 .thenReturn(new ArrayList<Product>());
     }
 
     @Test
     public void get_productModels() {
-        List<ProductModel> pms = discauntService.getProducts(CATEGORY_ID, Optional.empty());
+        List<ProductModel> pms = priceReductionService.getProducts(CATEGORY_ID, Optional.empty());
         assertTrue(pms.size()==0);
     }
 

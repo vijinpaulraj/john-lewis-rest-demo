@@ -36,7 +36,7 @@ public class ProductToProductModelConverter {
 		target.setProductId(source.getProductId());
 		target.setTitle(source.getTitle());
 		target.setPriceLabel(priceLabel);
-		target.setNowPrice(nowPrice(source.getPrice()));
+		target.setPriceNow(nowPrice(source.getPrice()));
 		target.setColorSwatches(colorSwatch);
 		
 		return target;
@@ -59,11 +59,9 @@ public class ProductToProductModelConverter {
 	 */
 	private String nowPrice(Price price) {
 		Float nowPrice;
-
 		try {
-			nowPrice = Float.parseFloat((String)price.getNow());
+			nowPrice = Float.parseFloat(price.getNow());
 		}catch (Exception e) {
-			//Todo: PriceNow model has to created to handle {from:x, to:y}
 			nowPrice = 1.23f;
 		}
 		return nowPrice >= 10 ? price.getCurrency().getCurrencySymbol()+Math.round(nowPrice) : price.getCurrency().getCurrencySymbol()+ String.format("%.2f", nowPrice) ;
@@ -140,12 +138,7 @@ public class ProductToProductModelConverter {
 		} else if (!Strings.isNullOrEmpty(price.getWas())) {
 			initialPrice = price.getWas();
 		}
-		try {
-			finalPrice = Float.parseFloat(price.getNow().toString());
-		} catch (Exception e) {
-			//Todo: this is just to handle type {from:x, to:null}. Should be replaced with model.
-			finalPrice = null;
-		}
+		finalPrice = Float.parseFloat(price.getNow());
 
 		if (!Strings.isNullOrEmpty(initialPrice) && finalPrice != null) {
 			return Math.round((finalPrice / Float.parseFloat(initialPrice)) * 100);

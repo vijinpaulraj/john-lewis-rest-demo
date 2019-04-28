@@ -1,5 +1,7 @@
 package com.johnlewis.converter;
 
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.johnlewis.domain.*;
 import com.johnlewis.model.ProductModel;
 import org.junit.Before;
@@ -40,7 +42,9 @@ public class ProductToProductModelConverterTest {
     	
     	Price price = new Price();
     	price.setCurrency(CurrencySymbol.GBP);
-    	price.setNow("5.00");
+		ObjectNode node = JsonNodeFactory.instance.objectNode();
+		node.put("now", "5.00");
+		price.setNow(node);
     	price.setWas("10");
     	
     	ColorSwatch colorSwatch = new ColorSwatch();
@@ -55,7 +59,7 @@ public class ProductToProductModelConverterTest {
     	assertEquals(TITLE, pm.getTitle());
     	
     	//which is the price.now represented as a string, including the currency, e.g. “£1.75”. For values that are integer, if they are less £10 return a decimal price, otherwise show an integer price, e.g. “£2.00” or “£10”.
-    	//assertEquals("£5", pm.getNowPrice());
+    	assertEquals("£5.00", pm.getPriceNow());
     	
     	//ShowPercDscount - in which case return “x% off - now £y.yy”.
     	assertEquals("50% off - now £5.00", pm.getPriceLabel());
@@ -71,7 +75,9 @@ public class ProductToProductModelConverterTest {
     	
     	Price price = new Price(); // new Price(Optional.ofNullable(9.12f), Optional.ofNullable(123.12f), Optional.ofNullable(123.12f), "123.54", "£");
     	price.setCurrency(CurrencySymbol.GBP);
-    	price.setNow("10.00");
+		ObjectNode node = JsonNodeFactory.instance.objectNode();
+		node.put("now", "10");
+		price.setNow(node);
     	price.setWas("20.00");
     	
     	ColorSwatch colorSwatch = new ColorSwatch();
@@ -88,7 +94,7 @@ public class ProductToProductModelConverterTest {
     	assertEquals(TITLE, pm.getTitle());
     	
     	//which is the price.now represented as a string, including the currency, e.g. “£1.75”. For values that are integer, if they are less £10 return a decimal price, otherwise show an integer price, e.g. “£2.00” or “£10”.
-    	assertEquals("£10", pm.getNowPrice());
+    	assertEquals("£10", pm.getPriceNow());
     	
     	// ShowWasNow - in which case return a string saying “Was £x.xx, now £y.yyy”.
     	assertEquals("Was £20, now £10", pm.getPriceLabel());
@@ -104,7 +110,9 @@ public class ProductToProductModelConverterTest {
        	
        	Price price = new Price(); // new Price(Optional.ofNullable(9.12f), Optional.ofNullable(123.12f), Optional.ofNullable(123.12f), "123.54", "£");
        	price.setCurrency(CurrencySymbol.GBP);
-       	price.setNow("10.00");
+		ObjectNode node = JsonNodeFactory.instance.objectNode();
+		node.put("now", "10");
+		price.setNow(node);
        	price.setWas("20.00");
        	
        	ColorSwatch colorSwatch = new ColorSwatch();
@@ -121,7 +129,7 @@ public class ProductToProductModelConverterTest {
        	assertEquals(TITLE, pm.getTitle());
        	
        	//which is the price.now represented as a string, including the currency, e.g. “£1.75”. For values that are integer, if they are less £10 return a decimal price, otherwise show an integer price, e.g. “£2.00” or “£10”.
-       	assertEquals("£10", pm.getNowPrice());
+       	assertEquals("£10", pm.getPriceNow());
        	
        	// ShowWasNow - in which case return a string saying “Was £x.xx, now £y.yyy”.
        	assertEquals("Was £20, now £10", pm.getPriceLabel());
@@ -138,7 +146,9 @@ public class ProductToProductModelConverterTest {
     	
     	Price price = new Price(); // new Price(Optional.ofNullable(9.12f), Optional.ofNullable(123.12f), Optional.ofNullable(123.12f), "123.54", "£");
     	price.setCurrency(CurrencySymbol.GBP);
-    	price.setNow("5.00");
+		ObjectNode node = JsonNodeFactory.instance.objectNode();
+		node.put("now", "5.0");
+		price.setNow(node);
     	price.setThen1("6.00");
     	price.setWas("10.00");
     	
@@ -155,7 +165,7 @@ public class ProductToProductModelConverterTest {
     	assertEquals(PRODUCT_ID, pm.getProductId());
     	assertEquals(TITLE, pm.getTitle());
 
-    	assertEquals("£5.00", pm.getNowPrice());
+    	assertEquals("£5.00", pm.getPriceNow());
     	
     	// ShowWasThenNow - in which case return a string saying “Was £x.xx, then £y.yy, now
     	// £z.zzz”. If the original price.then2 is not empty use that for the “then” price otherwise use
@@ -173,7 +183,9 @@ public class ProductToProductModelConverterTest {
     	
     	Price price = new Price(); // new Price("9.12", "123.12", "123.12", "123.54", "£");
     	price.setCurrency(CurrencySymbol.GBP);
-    	price.setNow("3");
+		ObjectNode node = JsonNodeFactory.instance.objectNode();
+		node.put("now", "3.00");
+    	price.setNow(node);
     	price.setThen1("5.00");
     	price.setThen2("7.00");
     	price.setWas("10.00");
@@ -185,14 +197,12 @@ public class ProductToProductModelConverterTest {
     	//when
     	ProductModel pm = converter.convert(product, labelType);
     	
-    	
-    	
     	//then
     	assertEquals(PRODUCT_ID, pm.getProductId());
     	assertEquals(TITLE, pm.getTitle());
     	
     	//which is the price.now represented as a string, including the currency, e.g. “£1.75”. For values that are integer, if they are less £10 return a decimal price, otherwise show an integer price, e.g. “£2.00” or “£10”.
-    	//assertEquals("£10", pm.getNowPrice());
+    	assertEquals("£3.00", pm.getPriceNow());
     	
     	// ShowWasThenNow - in which case return a string saying “Was £x.xx, then £y.yy, now
     	// £z.zzz”. If the original price.then2 is not empty use that for the “then” price otherwise use
@@ -211,8 +221,10 @@ public class ProductToProductModelConverterTest {
     	
     	Price price = new Price(); // new Price("9.12", "123.12", "123.12", "123.54", "£");
     	price.setCurrency(CurrencySymbol.GBP);
-    	//price.setNow("{from:\"12.36\", to: \"13:26\"}");
-		price.setNow("10.00");
+		ObjectNode node = JsonNodeFactory.instance.objectNode();
+		node.with("now").put("from", "5.0");
+		node.with("now").put("to", "10.0");
+		price.setNow(node);
     	price.setThen1("6.12");
     	price.setThen2("7.12");
     	price.setWas("20.00");
@@ -231,7 +243,7 @@ public class ProductToProductModelConverterTest {
     	assertEquals(TITLE, pm.getTitle());
     	
     	//which is the price.now represented as a string, including the currency, e.g. “£1.75”. For values that are integer, if they are less £10 return a decimal price, otherwise show an integer price, e.g. “£2.00” or “£10”.
-    	assertEquals("£10", pm.getNowPrice());
+    	assertEquals("£10", pm.getPriceNow());
     	
     	// ShowWasThenNow - in which case return a string saying “Was £x.xx, then £y.yy, now
     	// £z.zzz”. If the original price.then2 is not empty use that for the “then” price otherwise use
@@ -250,7 +262,9 @@ public class ProductToProductModelConverterTest {
 
 		Price price = new Price();
 		price.setCurrency(CurrencySymbol.GBP);
-		price.setNow("3.00");
+		ObjectNode node = JsonNodeFactory.instance.objectNode();
+		node.put("now", "3.0");
+		price.setNow(node);
 		price.setThen1("5.00");
 		price.setThen2("7.00");
 		price.setWas("10.00");
@@ -272,7 +286,7 @@ public class ProductToProductModelConverterTest {
 		assertEquals(TITLE, pm.getTitle());
 
 		//which is the price.now represented as a string, including the currency, e.g. “£1.75”. For values that are integer, if they are less £10 return a decimal price, otherwise show an integer price, e.g. “£2.00” or “£10”.
-		assertEquals("£3.00", pm.getNowPrice());
+		assertEquals("£3.00", pm.getPriceNow());
 
 		// ShowWasThenNow - in which case return a string saying “Was £x.xx, then £y.yy, now
 		// £z.zzz”. If the original price.then2 is not empty use that for the “then” price otherwise use
@@ -280,6 +294,4 @@ public class ProductToProductModelConverterTest {
 		assertEquals("Was £10, then £5.00, now £3.00", pm.getPriceLabel());
 
 	}
-
-
 }

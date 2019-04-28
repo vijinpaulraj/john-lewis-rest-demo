@@ -1,9 +1,9 @@
 package com.johnlewis.model;
 
+import io.swagger.annotations.ApiModel;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import io.swagger.annotations.ApiModel;
 
 @ApiModel
 
@@ -11,7 +11,7 @@ public class ProductModel {
 	
 	private String productId;
 	private String title;
-	private String nowPrice;
+	private String priceNow;
 	private String priceLabel;
 	private List<ColorSwatchModel> colorSwatches = new ArrayList<>();
 
@@ -31,20 +31,20 @@ public class ProductModel {
 		this.title = title;
 	}
 
-	public String getNowPrice() {
-		return nowPrice;
-	}
-
-	public void setNowPrice(String nowPrice) {
-		this.nowPrice = nowPrice;
-	}
-
 	public String getPriceLabel() {
 		return priceLabel;
 	}
 
 	public void setPriceLabel(String priceLabel) {
 		this.priceLabel = priceLabel;
+	}
+
+	public String getPriceNow() {
+		return priceNow;
+	}
+
+	public void setPriceNow(String priceNow) {
+		this.priceNow = priceNow;
 	}
 
 	public List<ColorSwatchModel> getColorSwatches() {
